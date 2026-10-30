@@ -328,6 +328,15 @@ void chip8::ADD_Fx1E(){
     I += v[x];
 }
 
+void chip8::LD_Fx29(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+
+    uint8_t digit = v[x];
+
+    I = InputStartingAddress + (digit * 5);
+
+}
+
 void chip8::LD_Fx55(){
     uint8_t x = (opcode & 0x0F00) >> 8;
 
