@@ -290,3 +290,9 @@ void chip8::SKNP_ExA1(){
         PC += 2;
     }
 }
+
+void chip8::LD_Fx07(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+
+    v[x] = delay_timer;
+}
