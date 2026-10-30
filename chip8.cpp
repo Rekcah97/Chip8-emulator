@@ -1,4 +1,5 @@
 #include <fstream>
+#include <sys/types.h>
 #include "hardware.h"
 
 #define InputStartingAddress 0x050
@@ -334,6 +335,20 @@ void chip8::LD_Fx29(){
     uint8_t digit = v[x];
 
     I = InputStartingAddress + (digit * 5);
+
+}
+
+void chip8::LD_Fx33(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t digit = v[x];
+
+    RAM[I + 2] = digit % 10;
+    digit /= 10; 
+
+    RAM[I + 1] = digit % 10;
+    digit /= 10; 
+
+    RAM[I] = digit % 10;
 
 }
 

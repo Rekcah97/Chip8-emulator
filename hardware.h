@@ -77,8 +77,8 @@ class chip8{
         void LD_Fx15();
         void LD_Fx18();
         void ADD_Fx1E();
-        void LD_Fx29(); //TO DO
-        void LD_Fx33(); //TO DO
+        void LD_Fx29(); 
+        void LD_Fx33(); 
         void LD_Fx55();
         void LD_Fx65();
 
