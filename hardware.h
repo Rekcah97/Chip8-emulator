@@ -80,6 +80,7 @@ class chip8{
         void LD_fx29(); //TO DO
         void LD_Fx33(); //TO DO
         void LD_Fx55();
+        void LD_Fx65();
 
 
 };
