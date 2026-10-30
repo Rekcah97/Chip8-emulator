@@ -71,6 +71,7 @@ class chip8{
         void RND_Cxkk();
         void DRW_Dxyn();
         void SKP_Ex9E();
+        void SKNP_ExA1();
 
 
 };

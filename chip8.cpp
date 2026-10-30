@@ -281,3 +281,12 @@ void chip8::SKP_Ex9E(){
     }
 
 }
+
+void chip8::SKNP_ExA1(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t key = v[x];
+
+    if(!input[key]){
+        PC += 2;
+    }
+}
