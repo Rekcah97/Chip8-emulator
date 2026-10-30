@@ -296,3 +296,17 @@ void chip8::LD_Fx07(){
 
     v[x] = delay_timer;
 }
+
+void chip8::LD_Fx0A(){
+   uint8_t x = (opcode & 0x0F00) >> 8;
+
+    for(uint8_t key = 0x0; key <= 0xF; key++){
+        if(input[key]){
+            v[x] = key;
+            return;
+        }
+    }
+
+        PC -= 2;
+
+}
