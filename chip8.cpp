@@ -327,3 +327,11 @@ void chip8::ADD_Fx1E(){
 
     I += v[x];
 }
+
+void chip8::LD_Fx55(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+
+    for(uint8_t i = 0;i < x;i++){
+        RAM[I + i] = v[i]; 
+    }
+}
