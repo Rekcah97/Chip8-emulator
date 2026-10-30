@@ -204,7 +204,7 @@ void chip8::SHL_8xyE(){
 
    int MSB = v[x] & 0x80;
 
-   v[0x0F] = (MSB == 1) ? 1 : 0;
+   v[0x0F] = (MSB == 0x80) ? 1 : 0;
    v[x] *= 2;
 
 }
@@ -238,11 +238,34 @@ void chip8::RND_Cxkk(){
 }
 
 void chip8::DRW_Dxyn(){
-    int n = opcode & 0x000F;
-    
-    int loop = (int) I + n ;
+    uint8_t n = opcode & 0x000F;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
-    for (int i = 0 ; i < loop ; i++){
+    uint8_t cordX = v[x];
+    uint8_t cordY = v[y];
+
+    v[0x0F] = 0; 
+    
+    for (int row = 0 ; row < n ; row++){
+
+        uint8_t spriteByte = RAM[I + row];
+        uint8_t screenY = (cordY + row) % 32 ; 
+
+        for (int col = 0; col < 8; col++){
+            uint8_t screenX = (cordX + col) % 64;
+            uint8_t sprite = (spriteByte >> (7 - col)) & 0x01;
+            uint8_t* pixel = &screen[screenY * 64 + screenX];
+            if(sprite){
+                if(*pixel){ //if both sprite and pixel are one
+                    v[0x0F] = 1;
+                }
+
+                *pixel ^= sprite;
+            }
+        }
+        
 
     }
+    drawScreen = 1;
 }
