@@ -315,3 +315,9 @@ void chip8::LD_Fx15(){
     uint8_t x = (opcode & 0x0F00) >> 8;
     delay_timer = v[x];
 }
+
+void chip8::LD_Fx18(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+
+    sound_timer = v[x];
+}
