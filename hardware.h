@@ -74,6 +74,7 @@ class chip8{
         void SKNP_ExA1();
         void LD_Fx07();
         void LD_Fx0A();
+        void LD_Fx15();
 
 
 
