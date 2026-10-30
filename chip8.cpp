@@ -269,3 +269,15 @@ void chip8::DRW_Dxyn(){
     }
     drawScreen = 1;
 }
+
+void chip8::SKP_Ex9E(){
+
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    
+    uint8_t key = v[x];
+
+    if(input[key]){
+        PC += 2;
+    }
+
+}

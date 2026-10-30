@@ -32,7 +32,7 @@ class chip8{
 
     public:
         bool drawScreen; 
-        uint8_t input[16]; // 16 Input Keys
+        bool input[16]; // 16 Input Keys
         uint8_t screen[ 64 * 32]; // 64x32 Monochrome Display Memory
 
 
@@ -70,6 +70,7 @@ class chip8{
         void JP_Bnnn();
         void RND_Cxkk();
         void DRW_Dxyn();
+        void SKP_Ex9E();
 
 
 };
