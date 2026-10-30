@@ -321,3 +321,9 @@ void chip8::LD_Fx18(){
 
     sound_timer = v[x];
 }
+
+void chip8::ADD_Fx1E(){
+    uint8_t x = (opcode & 0x0F00) >> 8;
+
+    I += v[x];
+}

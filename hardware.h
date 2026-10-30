@@ -76,7 +76,7 @@ class chip8{
         void LD_Fx0A();
         void LD_Fx15();
         void LD_Fx18();
-
+        void ADD_Fx1E();
 
 
 };
