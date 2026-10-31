@@ -367,3 +367,70 @@ void chip8::LD_Fx65(){
         v[i] = RAM[I+i];
     }
 }
+
+void chip8::execute(uint16_t op) {
+    switch (op & 0xF000) {
+        case 0x0000:
+            switch (op & 0x00FF) {
+                case 0xE0: CLS_00E0(); break;
+                case 0xEE: RET_00EE(); break;
+                default:   NOP();      break;
+            }
+            break;
+        case 0x1000: JMP_1nnn();  break;
+        case 0x2000: CALL_2nnn(); break;
+        case 0x3000: SE_3xkk();   break;
+        case 0x4000: SNE_4xkk();  break;
+        case 0x5000: SE_5xy0();   break;
+        case 0x6000: LD_6xkk();   break;
+        case 0x7000: ADD_7xkk();  break;
+        case 0x8000:
+            switch (op & 0x000F) {
+                case 0x0: LD_8xy0();   break;
+                case 0x1: OR_8xy1();   break;
+                case 0x2: AND_8xy2();  break;
+                case 0x3: XOR_8xy3();  break;
+                case 0x4: ADD_8xy4();  break;
+                case 0x5: SUB_8xy5();  break;
+                case 0x6: SHR_8xy6();  break;
+                case 0x7: SUBN_8xy7(); break;
+                case 0xE: SHL_8xyE();  break;
+                default:  NOP();       break;
+            }
+            break;
+        case 0x9000: SNE_9xy0(); break;
+        case 0xA000: LD_Annn();  break;
+        case 0xB000: JP_Bnnn();  break;
+        case 0xC000: RND_Cxkk(); break;
+        case 0xD000: DRW_Dxyn(); break;
+        case 0xE000:
+            switch (op & 0x00FF) {
+                case 0x9E: SKP_Ex9E();  break;
+                case 0xA1: SKNP_ExA1(); break;
+                default:   NOP();       break;
+            }
+            break;
+        case 0xF000:
+            switch (op & 0x00FF) {
+                case 0x07: LD_Fx07();  break;
+                case 0x0A: LD_Fx0A();  break;
+                case 0x15: LD_Fx15();  break;
+                case 0x18: LD_Fx18();  break;
+                case 0x1E: ADD_Fx1E(); break;
+                case 0x29: LD_Fx29();  break;
+                case 0x33: LD_Fx33();  break;
+                case 0x55: LD_Fx55();  break;
+                case 0x65: LD_Fx65();  break;
+                default:   NOP();      break;
+            }
+            break;
+        default: NOP(); break;
+    }
+}
+
+void chip8::cycle(){
+
+    opcode = (RAM[PC] << 8) + RAM[PC + 1];
+
+    PC += 2;
+}

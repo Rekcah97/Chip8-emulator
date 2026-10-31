@@ -49,6 +49,7 @@ class chip8{
         // Instructions
         void CLS_00E0();
         void RET_00EE();
+
         void JMP_1nnn();
         void CALL_2nnn();
         void SE_3xkk();
@@ -70,8 +71,10 @@ class chip8{
         void JP_Bnnn();
         void RND_Cxkk();
         void DRW_Dxyn();
+        
         void SKP_Ex9E();
         void SKNP_ExA1();
+
         void LD_Fx07();
         void LD_Fx0A();
         void LD_Fx15();
@@ -81,6 +84,13 @@ class chip8{
         void LD_Fx33(); 
         void LD_Fx55();
         void LD_Fx65();
+
+        void NOP(){
+            
+        };
+
+        void cycle();
+        void execute(uint16_t op);
 
 
 };
