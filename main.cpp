@@ -1,4 +1,4 @@
-#include "chip8.cpp"
+#include "src/chip8.cpp"
 using namespace std;
 
 int main(){
