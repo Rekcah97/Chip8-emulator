@@ -71,7 +71,7 @@ class chip8{
         void JP_Bnnn();
         void RND_Cxkk();
         void DRW_Dxyn();
-        
+
         void SKP_Ex9E();
         void SKNP_ExA1();
 
@@ -91,6 +91,7 @@ class chip8{
 
         void cycle();
         void execute(uint16_t op);
+        void updateTimers();
 
 
 };

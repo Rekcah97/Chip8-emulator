@@ -433,4 +433,18 @@ void chip8::cycle(){
     opcode = (RAM[PC] << 8) + RAM[PC + 1];
 
     PC += 2;
+
+    execute(opcode);
+
+}
+
+void chip8::updateTimers(){
+
+    if(delay_timer > 0){
+        --delay_timer;
+    }
+
+    if(sound_timer > 0){
+        --sound_timer;
+    }
 }
