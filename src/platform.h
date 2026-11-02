@@ -4,14 +4,14 @@
 
 
 class platform{
-    private:
+    public:
     platform(const char* title, int windowH , int windowW, int texH, int texW);
     ~platform();
 
     void update(const uint8_t* screen);
     bool processInput(uint8_t* keys);
 
-    public:
+
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;

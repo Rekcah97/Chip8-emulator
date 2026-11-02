@@ -7,7 +7,9 @@
 #include <vector>
 using namespace std;
 
-platform::platform(const char* title, int windowH , int windowW, int texH, int texW){
+platform::platform(const char* title, int windowH , int windowW, int texH, int texW) 
+    : texW(texW), texH(texH){
+    
 
 
     if(SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -31,7 +33,8 @@ platform::~platform(){
 }
 
 void platform::update(const uint8_t* screen){
-    static std::vector<uint32_t> pixels(texW * texH);
+
+    static vector<uint32_t> pixels(texW * texH);
     for (int i = 0; i < texW * texH; i++)
         pixels[i] = screen[i] ? 0xFFFFFFFF : 0x000000FF;   // RGBA: white / black
 

@@ -1,3 +1,4 @@
+#include <cstring>
 #include <fstream>
 #include <sys/types.h>
 #include "hardware.h"
@@ -16,6 +17,11 @@ bool chip8::loadRom(const char* romfile){
 
     //Checking the current location of input (get) pointer which we moved to end so we get size of the file.
     streamsize size = file.tellg();
+
+    if(size > RAM_SIZE - STARTING_ADDRESS || size <= 0){
+        return false;
+    }
+
     char* buffer = new char[size]; // making a block of memory
 
 
@@ -194,7 +200,7 @@ void chip8::SUBN_8xy7(){
     int x = (opcode & 0x0F00) >> 8;
     int y = (opcode & 0x00F0) >> 4;
 
-    v[0x0F] = (v[y] > v[x] ) ? 1 : 0; 
+    v[0x0F] = (v[y] >= v[x] ) ? 1 : 0; 
 
     v[x] = v[y] - v[x];
 
@@ -447,4 +453,21 @@ void chip8::updateTimers(){
     if(sound_timer > 0){
         --sound_timer;
     }
+}
+
+void chip8::reset(){
+        memset(RAM, 0, sizeof(RAM));
+        memset(v, 0, sizeof(v));
+        memset(stack, 0, sizeof(stack));
+        memset(screen, 0, sizeof(screen));
+        memset(input, 0, sizeof(input));
+
+        SP = 0;
+        PC = STARTING_ADDRESS;
+        delay_timer = 0;
+        sound_timer = 0;
+        drawScreen = false;
+        opcode = 0;
+        loadInput();
+
 }

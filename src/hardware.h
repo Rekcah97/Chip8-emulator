@@ -41,9 +41,8 @@ class chip8{
         uint8_t randomNumberGenerator();
 
         chip8(){ 
-            PC = STARTING_ADDRESS;
+            reset();
             srand(time(NULL));
-            loadInput();
         }
 
         // Instructions
@@ -93,6 +92,8 @@ class chip8{
         void execute(uint16_t op);
         void updateTimers();
 
+
+        void reset();
 
 };
 
