@@ -9,7 +9,7 @@ class platform{
     ~platform();
 
     void update(const uint8_t* screen);
-    bool processInput(uint8_t* keys);
+    bool processInput(bool* keys);
 
 
 
