@@ -96,7 +96,7 @@ void chip8::CALL_2nnn(){
 }
 
 void chip8::SE_3xkk(){
-     int x = (opcode & 0x0F00) >> 8;
+     uint8_t x = (opcode & 0x0F00) >> 8;
      uint8_t kk = opcode & 0x00FF;
      if(v[x] == kk) {
         PC += 2;
@@ -105,7 +105,7 @@ void chip8::SE_3xkk(){
 }
 
 void chip8::SNE_4xkk(){
-      int x = (opcode & 0x0F00) >> 8;
+      uint8_t x = (opcode & 0x0F00) >> 8;
      uint8_t kk = opcode & 0x00FF;
      if(v[x] != kk) {
         PC += 2;
@@ -113,8 +113,8 @@ void chip8::SNE_4xkk(){
 }
 
 void chip8::SE_5xy0(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
     if (v[x]==v[y]){
         PC += 2;
@@ -122,51 +122,51 @@ void chip8::SE_5xy0(){
 
 }
 void chip8::LD_6xkk(){
-    int x = (opcode & 0x0F00) >> 8;
+    uint8_t x = (opcode & 0x0F00) >> 8;
     uint8_t kk = opcode & 0x00FF;
 
     v[x] = kk ;
 }
 
 void chip8::ADD_7xkk(){
-    int x = (opcode & 0x0F00) >> 8;
+    uint8_t x = (opcode & 0x0F00) >> 8;
     uint8_t kk = opcode & 0x00FF;
 
     v[x] += kk;
 }
 
 void chip8::LD_8xy0(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
     v[x] = v[y];
 }
 
 void chip8::OR_8xy1(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
     v[x] = v[x] | v[y];
 }
 
 void chip8::AND_8xy2(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
     
     v[x] = v[x] & v[y];
 
 } 
 
 void chip8::XOR_8xy3(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
     v[x] = v[x] ^ v[y];
 }
 
 void chip8::ADD_8xy4(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
     uint16_t adder = v[x] + v[y];
 
@@ -176,20 +176,21 @@ void chip8::ADD_8xy4(){
 }
 
 void chip8::SUB_8xy5(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
-    v[0x0F] = (v[x] > v[y] ) ? 1 : 0; 
+    uint8_t flag = (v[x] >= v[y] ) ? 1 : 0; 
 
     v[x] -= v[y];
+    v[0x0F] = flag;
 
 
 }
 
 void chip8::SHR_8xy6(){
-    int x = (opcode & 0x0F00) >> 8;
+    uint8_t x = (opcode & 0x0F00) >> 8;
 
-    int LSB = v[x] & 0x01;
+    uint8_t LSB = v[x] & 0x01;
 
     v[0x0F] = (LSB == 1) ? 1 : 0; 
     v[x] /= 2;
@@ -197,19 +198,21 @@ void chip8::SHR_8xy6(){
 }
 
 void chip8::SUBN_8xy7(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
-    v[0x0F] = (v[y] >= v[x] ) ? 1 : 0; 
+    uint8_t flag = (v[y] >= v[x] ) ? 1 : 0; 
 
     v[x] = v[y] - v[x];
+
+    v[0x0F] = flag;
 
 }
 
 void chip8::SHL_8xyE(){
-   int x = (opcode & 0x0F00) >> 8;
+   uint8_t x = (opcode & 0x0F00) >> 8;
 
-   int MSB = v[x] & 0x80;
+   uint8_t MSB = v[x] & 0x80;
 
    v[0x0F] = (MSB == 0x80) ? 1 : 0;
    v[x] *= 2;
@@ -217,8 +220,8 @@ void chip8::SHL_8xyE(){
 }
 
 void chip8::SNE_9xy0(){
-    int x = (opcode & 0x0F00) >> 8;
-    int y = (opcode & 0x00F0) >> 4;
+    uint8_t x = (opcode & 0x0F00) >> 8;
+    uint8_t y = (opcode & 0x00F0) >> 4;
 
     if(v[x] != v[y]){
         PC += 2;
@@ -236,7 +239,7 @@ void chip8::JP_Bnnn(){
 }
 
 void chip8::RND_Cxkk(){
-    int x = (opcode & 0x0F00) >> 8 ;
+    uint8_t x = (opcode & 0x0F00) >> 8 ;
     uint8_t kk = opcode & 0x00FF;
     uint8_t random = randomNumberGenerator();
 
@@ -361,7 +364,7 @@ void chip8::LD_Fx33(){
 void chip8::LD_Fx55(){
     uint8_t x = (opcode & 0x0F00) >> 8;
 
-    for(uint8_t i = 0;i < x;i++){
+    for(uint8_t i = 0;i <= x;i++){
         RAM[I + i] = v[i]; 
     }
 }
@@ -369,7 +372,7 @@ void chip8::LD_Fx55(){
 void chip8::LD_Fx65(){
     uint8_t x = (opcode & 0x0F00) >> 8;
     
-    for(uint8_t i=0;i< x ;i++){
+    for(uint8_t i=0;i<= x ;i++){
         v[i] = RAM[I+i];
     }
 }
